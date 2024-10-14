@@ -2,7 +2,6 @@ import { z } from 'zod'
 import { POST_CATEGORY } from './post.constant'
 
 export const postCreateValidationSchema = z.object({
-  images: z.string().array().optional(),
   post: z
     .string({
       required_error: 'Post is required',
@@ -24,3 +23,5 @@ export const postCreateValidationSchema = z.object({
     })
     .trim(),
 })
+
+export const postUpdateValidationSchema = postCreateValidationSchema.partial()

@@ -3,10 +3,15 @@ import { catchAsync } from '../../utils/catchAsync.utils'
 import { respond } from '../../utils/response.utils'
 import { AuthService } from './auth.service'
 import AppError from '../../errors/AppError'
+import { TImageFile } from '../../interface/image.interface'
 
 export const createUser = catchAsync(async (req, res) => {
+  if (!req.file) {
+    throw new AppError(400, 'Please upload an image')
+  }
+
   const user = req.body
-  const data = await AuthService.createUser(user)
+  const data = await AuthService.createUser(user, req.file as TImageFile)
 
   respond(res, {
     data,

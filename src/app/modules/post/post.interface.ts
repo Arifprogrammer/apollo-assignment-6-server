@@ -10,4 +10,5 @@ export interface IPost {
   upvote: number
   downvote: number
   userId: ObjectId
+  comment: ObjectId
 }

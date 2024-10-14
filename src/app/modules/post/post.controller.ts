@@ -2,10 +2,39 @@ import httpStatus from 'http-status'
 import { catchAsync } from '../../utils/catchAsync.utils'
 import { respond } from '../../utils/response.utils'
 import { PostService } from './post.service'
+import AppError from '../../errors/AppError'
+import { TImageFiles } from '../../interface/image.interface'
+
+export const getAllPost = catchAsync(async (req, res) => {
+  const data = await PostService.getAllPost(req.query)
+
+  respond(res, {
+    data,
+    success: true,
+    statusCode: httpStatus.OK,
+    message: 'Retrieved all posts successfully',
+  })
+})
+
+export const getMyPost = catchAsync(async (req, res) => {
+  const user = req.user
+  const data = await PostService.getMyPost(user.id)
+
+  respond(res, {
+    data,
+    success: true,
+    statusCode: httpStatus.OK,
+    message: 'Retrieved my posts successfully',
+  })
+})
 
 export const createPost = catchAsync(async (req, res) => {
+  if (!req.files) {
+    throw new AppError(400, 'Please upload an image')
+  }
+
   const post = req.body
-  const data = await PostService.createPost(post)
+  const data = await PostService.createPost(post, req.files as TImageFiles)
 
   respond(res, {
     data,

@@ -10,11 +10,16 @@ import config from '../../config'
 import { ObjectId } from 'mongoose'
 import { shake } from 'radash'
 import { sendEmail } from '../../utils/sendEmail'
+import { TImageFile } from '../../interface/image.interface'
 
 class Service {
-  async createUser(user: IUser) {
+  async createUser(user: IUser, profilePhoto: TImageFile) {
     if (await User.isUserExist(user.email)) {
       throw new AppError(httpStatus.BAD_REQUEST, 'The user is already exist')
+    }
+
+    if (profilePhoto) {
+      user.profilePhoto = profilePhoto.path
     }
 
     const newUser = await User.create(user)

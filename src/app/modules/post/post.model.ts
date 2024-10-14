@@ -31,6 +31,11 @@ const postSchema = new Schema<IPost>(
       type: Number,
       default: 0,
     },
+    comment: {
+      type: Types.ObjectId,
+      ref: 'Comment',
+      trim: true,
+    },
     userId: {
       type: Types.ObjectId,
       required: [true, 'User id is required'],
