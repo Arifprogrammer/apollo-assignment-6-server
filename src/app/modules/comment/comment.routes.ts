@@ -29,4 +29,4 @@ router.put(
 )
 router.delete('/delete/:id', authenticateToken(), deleteComment)
 
-export const authRouter = router
+export const commentRouter = router

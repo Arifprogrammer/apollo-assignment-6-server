@@ -42,4 +42,4 @@ router.put(
   updatePost,
 )
 
-export const authRouter = router
+export const postRouter = router

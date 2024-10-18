@@ -1,8 +1,7 @@
 import { Router } from 'express'
 import { authRouter } from '../modules/auth/auth.routes'
-import { roomRouter } from '../modules/room/room.routes'
-import { slotRouter } from '../modules/slot/slot.routes'
-import { bookingRouter } from '../modules/booking/booking.routes'
+import { postRouter } from '../modules/post/post.routes'
+import { commentRouter } from '../modules/comment/comment.routes'
 
 export const router = Router()
 
@@ -12,16 +11,12 @@ const moduleRoutes = [
     route: authRouter,
   },
   {
-    path: '/rooms',
-    route: roomRouter,
+    path: '/posts',
+    route: postRouter,
   },
   {
-    path: '/slots',
-    route: slotRouter,
-  },
-  {
-    path: '/bookings',
-    route: bookingRouter,
+    path: '/comments',
+    route: commentRouter,
   },
 ]
 

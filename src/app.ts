@@ -8,7 +8,15 @@ const app: Application = express()
 
 //* middlewares
 app.use(express.json())
-app.use(cors())
+app.use(
+  cors({
+    origin: [
+      'http://localhost:3000',
+      'https://reserve-realm-client.vercel.app',
+    ],
+    credentials: true,
+  }),
+)
 
 //* routes
 app.use('/api/v1', router)

@@ -9,7 +9,7 @@ export const createUser = catchAsync(async (req, res) => {
   if (!req.file) {
     throw new AppError(400, 'Please upload an image')
   }
-
+  console.log(req.body)
   const user = req.body
   const data = await AuthService.createUser(user, req.file as TImageFile)
 
