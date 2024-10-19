@@ -57,7 +57,7 @@ export const forgetPassword = catchAsync(async (req, res) => {
 })
 
 export const resetPassword = catchAsync(async (req, res) => {
-  const token = req.headers.authorization
+  const token = req.headers.authorization?.split(' ')[1] as string
 
   if (!token) {
     throw new AppError(httpStatus.BAD_REQUEST, 'Something went wrong !')

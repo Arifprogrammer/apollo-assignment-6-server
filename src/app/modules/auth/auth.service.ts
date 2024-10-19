@@ -117,22 +117,44 @@ class Service {
 
     const resetPasswordLink = `${config.reset_pass_ui_link}?id=${user.id}&token=${resetToken} `
 
-    console.log(resetPasswordLink)
-    sendEmail(user.email, user.name, resetPasswordLink)
+    await sendEmail(user.email, user.name, resetPasswordLink)
+    // eslint-disable-next-line no-console
+    console.log('Email send successfully')
   }
 
   async resetPassword(
     payload: { email: string; newPassword: string },
     token: string,
   ) {
-    const { email, role } = jwt.verify(
+    const { email, role, iat } = jwt.verify(
       token,
-      config.jwt_access_secret as string,
+      config.JWT_SECRET as string,
     ) as JwtPayload
 
     if (payload.email !== email) {
-      // console.log(payload.id, userId);
       throw new AppError(httpStatus.FORBIDDEN, 'You are forbidden!')
+    }
+
+    // checking if the user is exist
+    const user = await User.isUserExist(email)
+
+    if (!user) {
+      throw new AppError(httpStatus.NOT_FOUND, 'This user is not found !')
+    }
+
+    // checking if the user is already deleted
+    if (user?.isDeleted) {
+      throw new AppError(httpStatus.FORBIDDEN, 'This user is deleted !')
+    }
+
+    if (
+      user.passwordChangedAt &&
+      User.isJWTIssuedBeforePasswordChanged(
+        user.passwordChangedAt,
+        iat as number,
+      )
+    ) {
+      throw new AppError(httpStatus.UNAUTHORIZED, 'You are not authorized !')
     }
 
     //hash new password

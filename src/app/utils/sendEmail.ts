@@ -19,7 +19,7 @@ export const sendEmail = async (
     await transporter.sendMail({
       from: config.SENDER_EMAIL, // sender address
       to, // list of receivers
-      subject: 'Reset your password within ten mins!', // Subject line
+      subject: 'Reset your password within 5 mins!', // Subject line
       text: '', // plain text body
       html: `<h1>Reset Your Password<h1> \n
   <h5>Hi ${userName},</h5> \n
@@ -29,6 +29,7 @@ export const sendEmail = async (
   <p>This password reset link will expire in 5 minutes for security reasons. If you miss this window, you can request a new reset link.</p>`,
     })
   } catch (error) {
-    console.log(error, 'getting error while sending email')
+    // eslint-disable-next-line no-console
+    console.log(error, 'Getting error while sending email')
   }
 }

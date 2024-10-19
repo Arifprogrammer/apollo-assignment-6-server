@@ -45,7 +45,6 @@ router.post(
 )
 router.post(
   '/reset-password',
-  authenticateToken(),
   validateBody(resetPasswordValidationSchema),
   resetPassword,
 )
