@@ -11,6 +11,7 @@ export default {
   NODE_ENV: process.env.NODE_ENV,
   JWT_SECRET: process.env.JWT_SECRET,
   Access_Token_Expiration: process.env.ACCESS_TOKEN_EXPIRATION,
+  RESET_ACCESS_TOKEN_EXPIRATION: process.env.RESET_ACCESS_TOKEN_EXPIRATION,
   cloudinary_cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   cloudinary_api_key: process.env.CLOUDINARY_API_KEY,
   cloudinary_api_secret: process.env.CLOUDINARY_API_SECRET,

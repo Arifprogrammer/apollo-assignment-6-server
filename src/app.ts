@@ -3,6 +3,7 @@ import cors from 'cors'
 import { globalErrorHandler } from './app/middlewares/global-error-handler.middleware'
 import { notFound } from './app/middlewares/not-found.middleware'
 import { router } from './app/routes'
+import cookieParser from 'cookie-parser'
 
 const app: Application = express()
 
@@ -17,6 +18,11 @@ app.use(
     credentials: true,
   }),
 )
+
+app.use(express.urlencoded({ extended: true }))
+
+//* parser
+app.use(cookieParser())
 
 //* routes
 app.use('/api/v1', router)

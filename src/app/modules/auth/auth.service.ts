@@ -49,6 +49,7 @@ class Service {
       existingUser.role,
       existingUser.name,
       existingUser.id!,
+      existingUser.profilePhoto,
     )
     const userWithOutPass = await User.userWithoutPassword(
       existingUser.id as ObjectId,
@@ -202,16 +203,21 @@ class Service {
     role: string,
     name: string,
     id?: ObjectId,
+    profilePhoto?: string,
   ) {
     const payload: JwtPayload = {
       email,
       role,
       id,
       name,
+      profilePhoto,
     }
 
     return jwt.sign(shake(payload), config.JWT_SECRET, {
-      expiresIn: id ? config.Access_Token_Expiration : '5m',
+      expiresIn:
+        id && profilePhoto
+          ? config.Access_Token_Expiration
+          : config.RESET_ACCESS_TOKEN_EXPIRATION,
     })
   }
 }
