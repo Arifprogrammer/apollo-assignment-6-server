@@ -7,8 +7,8 @@ import handleValidationError from '../errors/handleValidationError'
 import handleDuplicateError from '../errors/handleDuplicateError'
 import handleCastError from '../errors/handleCastError'
 import AppError from '../errors/AppError'
-import { deleteImageFromCloudinary } from '../utils/deleteImage'
-import { TImageFiles } from '../interface/image.interface'
+import { deleteImagesFromCloudinary } from '../utils/deleteImage'
+import { TImageFile, TImageFiles } from '../interface/image.interface'
 
 export const globalErrorHandler = async (
   err: any,
@@ -27,8 +27,10 @@ export const globalErrorHandler = async (
   ]
 
   if (req.files && Object.keys(req.files).length > 0) {
-    await deleteImageFromCloudinary(req.files as TImageFiles)
+    await deleteImagesFromCloudinary(req.files as TImageFiles)
   }
+
+  if (req.file) await deleteImagesFromCloudinary(req.file as TImageFile)
 
   if (err instanceof ZodError) {
     const simplifiedError = handleZodError(err)

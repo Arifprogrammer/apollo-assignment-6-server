@@ -1,5 +1,5 @@
 {
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "cSpell.words": ["cloudinary", "downvoted", "upvoted"]
+  "cSpell.words": ["cloudinary", "downvoted", "fieldname", "upvoted"]
 }

@@ -2,6 +2,8 @@ import { ObjectId } from 'mongoose'
 import { User } from './user.model'
 import AppError from '../../errors/AppError'
 import httpStatus from 'http-status'
+import { IUser } from './user.interface'
+import { TImageFile } from '../../interface/image.interface'
 
 class Service {
   async followUser(followingUserId: ObjectId, userId: ObjectId) {
@@ -50,7 +52,20 @@ class Service {
   }
 
   async getMe(userId: ObjectId) {
-    return await User.findById({ id: userId })
+    return await User.userWithoutPassword(userId)
+  }
+
+  async update(userId: string, user: IUser, profilePhoto: TImageFile) {
+    console.log({ userId, user, profilePhoto })
+    if (await User.isUserExist(user.email)) {
+      throw new AppError(httpStatus.BAD_REQUEST, 'The user is already exist')
+    }
+
+    if (profilePhoto) {
+      user.profilePhoto = profilePhoto.path
+    }
+
+    return await User.updateOne({ _id: userId }, user).select('-password')
   }
 }
 

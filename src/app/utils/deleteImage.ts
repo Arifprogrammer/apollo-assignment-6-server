@@ -1,13 +1,17 @@
 import { cloudinaryUpload } from '../config/cloudinary.config'
-import { TImageFiles } from '../interface/image.interface'
+import { TImageFile, TImageFiles } from '../interface/image.interface'
 
-export const deleteImageFromCloudinary = (files: TImageFiles) => {
+export const deleteImagesFromCloudinary = (files: TImageFile | TImageFiles) => {
   const publicIds: string[] = []
 
-  for (const file of Object.values(files)) {
-    for (const image of file) {
-      publicIds.push(image.filename)
+  if (Array.isArray(files.fieldname)) {
+    for (const file of Object.values(files)) {
+      for (const image of file) {
+        publicIds.push(image.filename)
+      }
     }
+  } else {
+    publicIds.push(files.filename as string)
   }
 
   return new Promise((resolve, reject) => {

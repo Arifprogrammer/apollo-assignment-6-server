@@ -1,8 +1,14 @@
 import { Router } from 'express'
 import { authenticateToken } from '../../middlewares/authenticateToken.middleware'
 import { validateBody } from '../../middlewares/validate-zod.middleware'
-import { favoritePostSchema, followingSchema } from '../user/user.validation'
-import { followUser, getMe, makePostFavorite } from './user.controller'
+import {
+  favoritePostSchema,
+  followingSchema,
+  updateUserSchema,
+} from '../user/user.validation'
+import { followUser, getMe, makePostFavorite, update } from './user.controller'
+import { parseBody } from '../../middlewares/bodyParser'
+import { multerUpload } from '../../config/multer.config'
 
 const router = Router()
 
@@ -20,3 +26,14 @@ router.post(
 )
 
 router.get('/get-me', authenticateToken(), getMe)
+
+router.put(
+  '/:id',
+  authenticateToken(),
+  multerUpload.single('image'),
+  parseBody,
+  validateBody(updateUserSchema),
+  update,
+)
+
+export const userRouter = router

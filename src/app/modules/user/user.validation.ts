@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import { userCreateValidationSchema } from '../auth/auth.validation'
 
 export const followingSchema = z.object({
   followingUserId: z
@@ -17,3 +18,7 @@ export const favoritePostSchema = z.object({
     })
     .trim(),
 })
+
+export const updateUserSchema = userCreateValidationSchema
+  .omit({ password: true })
+  .partial()
