@@ -1,6 +1,6 @@
-import { z } from 'zod';
+import { z } from 'zod'
 
-const MAX_UPLOAD_SIZE = 1024 * 1024 * 3; // 3MB
+const MAX_UPLOAD_SIZE = 1024 * 1024 * 3 // 3MB
 const ACCEPTED_FILE_TYPES = [
   'image/png',
   'image/jpeg',
@@ -8,7 +8,7 @@ const ACCEPTED_FILE_TYPES = [
   'png',
   'jpeg',
   'jpg',
-] as const;
+] as const
 
 const ImageFileZodSchema = z.object({
   fieldname: z.string(),
@@ -18,15 +18,12 @@ const ImageFileZodSchema = z.object({
   path: z.string(),
   size: z
     .number()
-    .refine(
-      (size) => size <= MAX_UPLOAD_SIZE,
-      'File size must be less than 3MB'
-    ),
+    .refine(size => size <= MAX_UPLOAD_SIZE, 'File size must be less than 3MB'),
   filename: z.string(),
-});
+})
 
 export const ImageFilesArrayZodSchema = z.object({
-  files: z.record(z.string(), z.array(ImageFileZodSchema)).refine((files) => {
-    return Object.keys(files).length > 0;
+  files: z.record(z.string(), z.array(ImageFileZodSchema)).refine(files => {
+    return Object.keys(files).length > 0
   }, 'Image is required'),
-});
+})

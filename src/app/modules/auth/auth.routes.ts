@@ -3,16 +3,12 @@ import { validateBody } from '../../middlewares/validate-zod.middleware'
 import {
   changePassword,
   createUser,
-  followUser,
   forgetPassword,
   loginUser,
-  makePostFavorite,
   resetPassword,
 } from './auth.controller'
 import {
   changePasswordValidationSchema,
-  favoritePostSchema,
-  followingSchema,
   forgetPasswordValidationSchema,
   resetPasswordValidationSchema,
   userCreateValidationSchema,
@@ -47,18 +43,6 @@ router.post(
   '/reset-password',
   validateBody(resetPasswordValidationSchema),
   resetPassword,
-)
-router.post(
-  '/following',
-  authenticateToken(),
-  validateBody(followingSchema),
-  followUser,
-)
-router.post(
-  '/favorite-post',
-  authenticateToken(),
-  validateBody(favoritePostSchema),
-  makePostFavorite,
 )
 
 export const authRouter = router

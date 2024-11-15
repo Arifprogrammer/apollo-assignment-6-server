@@ -72,29 +72,3 @@ export const resetPassword = catchAsync(async (req, res) => {
     message: 'Password reset successfully!',
   })
 })
-
-export const followUser = catchAsync(async (req, res) => {
-  const user = req.user
-  const { followingUserId } = req.body
-  const data = await AuthService.followUser(followingUserId, user.id)
-
-  respond(res, {
-    data,
-    success: true,
-    statusCode: httpStatus.OK,
-    message: 'Following user successfully',
-  })
-})
-
-export const makePostFavorite = catchAsync(async (req, res) => {
-  const user = req.user
-  const { postId } = req.body
-  const data = await AuthService.makePostFavorite(postId, user.id)
-
-  respond(res, {
-    data,
-    success: true,
-    statusCode: httpStatus.OK,
-    message: 'Following user successfully',
-  })
-})
